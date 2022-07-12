@@ -40,14 +40,7 @@ body {
 
 }
 
-.calc {
 
-    
-    
-
-
-
-}
 
 #calc-display {
     height: 20%;
@@ -58,6 +51,7 @@ body {
     border-style: solid;
     border-radius: 8px;
     display: flex;
+    flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
     
@@ -70,7 +64,22 @@ body {
     justify-content: flex-end;
     font-size: 54px;
     font-weight: bold;
-    padding: 8px;
+    padding-bottom: 8px;
+    padding-right: 8px;
+    height: 70%;
+
+
+
+}
+#calc-current {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    font-size: 14px;
+    font-weight: italic;
+    padding-top: 12px;
+    padding-right: 12px;
+    height: 20%;
 
 
 
