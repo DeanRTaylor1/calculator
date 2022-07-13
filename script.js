@@ -60,11 +60,22 @@ grid.addEventListener('click', event => {
     const calculation = currentCalc.textContent;
     console.log(key.classList.value);
 
-    if(key.classList.value === 'numberbtn'){
+    if(keyValue === '.' && grid.dataset.dot != '.' && grid.dataset.previousoperatorType != '='){
+        grid.dataset.dot = keyValue;
+        output.textContent = displayValue + keyValue;
+    } else if(keyValue === '.' && grid.dataset.dot === '.'){
+        return
+    }
+
+
+    if(key.classList.value === 'numberbtn' && keyValue != '.'){
         if(displayValue === '0'){
             output.textContent = keyValue;  
-        } else {output.textContent = displayValue + keyValue;
+        } else if (grid.dataset.previousoperatorType === '='){
+            return;
+        }else {output.textContent = displayValue + keyValue;
         }
+        console.log;
     
 }
 
@@ -86,6 +97,7 @@ grid.addEventListener('click', event => {
             grid.dataset.previousoperatorType = keyValue;
 
         }
+        grid.dataset.dot = '';
     }
 
     if(key.classList.value === 'equalbtn'){
