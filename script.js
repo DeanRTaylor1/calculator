@@ -2,6 +2,11 @@
 const grid = document.querySelector("#grid");
 const output = document.querySelector("#calc-output");
 const currentCalc = document.querySelector("#calc-current");
+const resetbuttons = document.querySelector("#calc-top-row");
+
+
+
+
 
 
 function operation(operation, num2, num1){
@@ -21,7 +26,32 @@ function operation(operation, num2, num1){
 
 }
 
+resetbuttons.addEventListener('click', event => {  
+    if(!event.target.closest('button')) return; 
 
+    const key = event.target;
+    const displayValue = output.textContent;
+    const calculation = currentCalc.textContent;
+    clearbtn = 'clearBtn';
+    
+
+
+    if(key.classList.value === 'clearbtn'){
+        output.textContent = '0';
+        currentCalc.textContent = '';
+    }
+    if(key.classList.value === 'deletebtn'){
+       if(displayValue.length === 1 && displayValue != '0' && grid.dataset.previousoperatorType != '='){
+        output.textContent = '0';
+       } else if(grid.dataset.previousoperatorType === '=' || displayValue === '0'){
+        return;
+    }   else {        
+        let newVal = displayValue.slice(0, -1);        
+        output.textContent = newVal;
+       }
+    }
+
+});
 
 grid.addEventListener('click', event => {  
     if(!event.target.closest('button')) return;  
@@ -46,11 +76,15 @@ grid.addEventListener('click', event => {
         grid.dataset.previousoperatorType = keyValue;
         output.textContent = '0';
 
-        } else {
+        } else if(grid.dataset.previousoperatorType === '='){
+            currentCalc.textContent = ` ${displayValue} ${keyValue}`;
+            grid.dataset.previousoperatorType = keyValue;
+            //let displayNumber = operation(grid.dataset.previousoperatorType, parseFloat(displayValue), parseFloat(calculation));
+            output.textContent = 0;
+        }else {
             output.textContent = '0';
-            console.log(grid.dataset.previousoperatorType === '×');
             let displayNumber = operation(grid.dataset.previousoperatorType, parseFloat(displayValue), parseFloat(calculation));
-            currentCalc.textContent = ` ${displayNumber} ${keyValue}`;
+            currentCalc.textContent = `${displayNumber} ${keyValue}`;
             grid.dataset.previousoperatorType = keyValue;
 
 
@@ -67,10 +101,12 @@ grid.addEventListener('click', event => {
     if(key.classList.value === 'equalbtn'){
         if(calculation === ''){ 
             return;
+        } else if (grid.dataset.previousoperatorType === '='){
+            return;
         }
         else { 
             let result = operation(grid.dataset.previousoperatorType, parseFloat(displayValue), parseFloat(calculation));
-            currentCalc.textContent = `${displayValue} ${keyValue}`
+            currentCalc.textContent = `${calculation} ${displayValue} ${keyValue}`
             output.textContent = result;
             grid.dataset.previousoperatorType = keyValue;
 
