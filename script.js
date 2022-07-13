@@ -4,6 +4,101 @@ const output = document.querySelector("#calc-output");
 const currentCalc = document.querySelector("#calc-current");
 
 
+function operation(operation, num2, num1){
+    if(operation === '×'){
+        return num1 * num2;
+    }
+    if(operation === '+'){
+        return num1 + num2;
+    }
+    if(operation === '-'){
+        return num1 - num2;
+    }
+    if(operation === '÷'){
+        return num1 / num2;
+    }
+
+
+}
+
+
+
+grid.addEventListener('click', event => {  
+    if(!event.target.closest('button')) return;  
+
+    const key = event.target;
+    const keyValue = key.textContent;
+    const displayValue = output.textContent;
+    const calculation = currentCalc.textContent;
+    console.log(key.classList.value);
+
+    if(key.classList.value === 'numberbtn'){
+        if(displayValue === '0'){
+            output.textContent = keyValue;  
+        } else {output.textContent = displayValue + keyValue;
+        }
+    
+}
+
+   if(key.classList.value === 'operatorbtn'){
+        if(calculation === ''){
+        currentCalc.textContent = ` ${displayValue} ${keyValue}`;
+        grid.dataset.previousoperatorType = keyValue;
+        output.textContent = '0';
+
+        } else {
+            output.textContent = '0';
+            console.log(grid.dataset.previousoperatorType === '×');
+            let displayNumber = operation(grid.dataset.previousoperatorType, parseFloat(displayValue), parseFloat(calculation));
+            currentCalc.textContent = ` ${displayNumber} ${keyValue}`;
+            grid.dataset.previousoperatorType = keyValue;
+
+
+        }
+        
+     
+
+        
+
+
+        
+    }
+
+    if(key.classList.value === 'equalbtn'){
+        if(calculation === ''){ 
+            return;
+        }
+        else { 
+            let result = operation(grid.dataset.previousoperatorType, parseFloat(displayValue), parseFloat(calculation));
+            currentCalc.textContent = `${displayValue} ${keyValue}`
+            output.textContent = result;
+            grid.dataset.previousoperatorType = keyValue;
+
+        }
+
+
+
+    }
+   
+    
+
+    console.log(grid.dataset.previousKeyType);
+
+
+    
+
+
+});
+
+
+
+
+
+
+
+/*
+
+
 //buttons
 const oneBtn = document.querySelector("#oneBtn");
 const twoBtn = document.querySelector("#twoBtn");
@@ -27,6 +122,8 @@ const deleteBtn = document.querySelector("#deleteBtn");
 let currentNum = '';
 let storedNum = 0;
 let currentOperater = '';
+
+console.log(sevenBtn.id);
 
 //numbers
 
@@ -55,7 +152,7 @@ console.log(parseInt(currentNum));
 
 if (currentNum != 0){
 
-    storedNum -= parseInt(currentNum);
+    storedNum += parseInt(currentNum);
     currentCalc.innerHTML = '' ;
     currentCalc.append(storedNum + ' - ');      
     currentNum = '';
@@ -204,7 +301,7 @@ function operate(op, num1, num2){
 */
 
 
-    window.onload = () => {
-        updateOutput(0);
+  //  window.onload = () => {
+      //  updateOutput(0);
         
-      }
+      //}
